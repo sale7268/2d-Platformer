@@ -11,6 +11,10 @@ public class LevelParserStarter : MonoBehaviour
 
     public GameObject Brick;
 
+    public GameObject Water;
+
+    public GameObject Finish;
+
     public GameObject QuestionBox;
 
     public GameObject Stone;
@@ -28,8 +32,6 @@ public class LevelParserStarter : MonoBehaviour
     {
         string fileToParse = string.Format("{0}{1}{2}.txt", Application.dataPath, "/Resources/", filename);
 
-        Debug.Log("File: " + filename);
-
         using (StreamReader sr = new StreamReader(fileToParse))
         {
             string line = "";
@@ -37,7 +39,6 @@ public class LevelParserStarter : MonoBehaviour
 
             while ((line = sr.ReadLine()) != null)
             {
-                Debug.Log("Line: " + line);
                 int column = 0;
                 char[] letters = line.ToCharArray();
                 foreach (var letter in letters)
@@ -54,21 +55,20 @@ public class LevelParserStarter : MonoBehaviour
     private void SpawnPrefab(char spot, Vector3 positionToSpawn)
     {
         GameObject ToSpawn = null;
-        Debug.Log("Position spawn initial " + positionToSpawn);
         switch (spot)
         {
             case 'b': ToSpawn = Brick;  break;
             case '?': ToSpawn = QuestionBox;  break;
-            case 'x': ToSpawn = Stone;  break;
-            case 's': ToSpawn = Rock;  break;
+            case 'x': ToSpawn = Rock;  break;
+            case 's': ToSpawn = Stone;  break;
+            case '~': ToSpawn = Water; break;
+            case '|': ToSpawn = Finish; break;
             default:  return;
         }
 
 
         ToSpawn = GameObject.Instantiate(ToSpawn, positionToSpawn, Quaternion.identity);
         ToSpawn.transform.position = positionToSpawn;
-        Debug.Log("Position spawn final: " + positionToSpawn);
-        Debug.Log("ToSpawn: " + ToSpawn);
     }
 
     public void RefreshParse()

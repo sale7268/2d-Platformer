@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class CountDownTimer : MonoBehaviour
 {
     float currentTime = 0f;
-    float startTime = 300f;
+    float startTime = 100f;
 
     public GameObject timer;
     // Start is called before the first frame update
@@ -20,6 +20,15 @@ public class CountDownTimer : MonoBehaviour
     void Update()
     {
         currentTime -= Time.deltaTime;
-        timer.GetComponent<TextMeshProUGUI>().text = currentTime.ToString();
+        if(currentTime <= 0)
+        {
+            Debug.Log("Time over, you Failed");
+            Application.Quit();
+        }
+        string timez = currentTime.ToString();
+        string finalTime = "";
+        finalTime += timez[0].ToString();
+        finalTime += timez[1].ToString();
+        timer.GetComponent<TextMeshProUGUI>().text = finalTime;
     }
 }
